@@ -1,0 +1,9 @@
+{
+  "timezone": "UTC",
+  "calendar_tag": "Register",
+  "sweep_skill": ".claude/skills/mail-sweep/SKILL.md",
+  "journal_checked_from": "2026-01-01",
+  "mailboxes": [
+    { "owner": "the principal", "address": "?", "reached_by": "the Gmail connector" }
+  ]
+}

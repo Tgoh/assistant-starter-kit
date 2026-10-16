@@ -1,0 +1,32 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__claude-in-chrome__.*",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/read-first.mjs\" browser", "timeout": 10 }
+        ]
+      },
+      {
+        "matcher": "mcp__claude_ai_Gmail__(create_draft|update_draft|reply|send_message|forward)",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/read-first.mjs\" correspondence", "timeout": 10 }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/read-first.mjs\" browser", "timeout": 10 }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          { "type": "command", "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/read-first.mjs\" correspondence", "timeout": 10 }
+        ]
+      }
+    ]
+  }
+}

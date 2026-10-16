@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuses a commit the checker would refuse. Enabled per clone with
+#   git config core.hooksPath system/hooks
+exec node system/scripts/check.mjs
