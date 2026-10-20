@@ -101,7 +101,20 @@ Both scripts must print `clean`. On macOS or Linux, also run
 
 ## 5. A private backup on GitHub (optional)
 
-Ask whether they want one. Skip this step if not; everything works without it.
+Explain it in plain words first, then ask. Something like:
+
+> Right now your notes live only on this computer. If it breaks, or is lost
+> or stolen, they're gone. GitHub can keep a copy online, in a private
+> folder only you can see. Every time we close a session, the newest version
+> gets copied up, so on a new computer you'd get everything back, and you
+> could even look at how things stood last month. It's free. You need a
+> GitHub account and one small program, and it takes about five minutes.
+> Want to set it up now, later, or not at all?
+
+- **Now:** carry on below.
+- **Later:** add a row so it comes back, then go to step 6:
+  `node system/scripts/obligations.mjs add --id github-backup --kind step --due <in a week> --chosen --what "Offer the private GitHub backup again: SETUP.md step 5."`
+- **Not at all:** go to step 6. Everything works without it.
 
 1. They need a GitHub account and the GitHub CLI. Check with `gh --version`.
    If it's missing, they install it: `winget install GitHub.cli` on Windows,
