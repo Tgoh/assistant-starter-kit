@@ -10,6 +10,18 @@ Everything after the interview is written through the Write and Edit tools and
 the scripts, never by hand-editing JSON. Show the principal what you are about
 to write before writing anything that is theirs.
 
+**First, before anything else:** if this folder was cloned from GitHub, it is
+still connected to the kit's repository, and pushing from it would upload the
+principal's notes there. Disconnect it:
+
+```
+git remote remove origin
+```
+
+Then check with `git remote -v`, which should print nothing. If they want a
+backup of their own later, they create their own private repository and add
+it as a new remote.
+
 ---
 
 ## 1. The person
