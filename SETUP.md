@@ -18,9 +18,8 @@ principal's notes there. Disconnect it:
 git remote remove origin
 ```
 
-Then check with `git remote -v`, which should print nothing. If they want a
-backup of their own later, they create their own private repository and add
-it as a new remote.
+Then check with `git remote -v`, which should print nothing. A backup of their
+own is step 5, once the repository has its first commit.
 
 ---
 
@@ -100,7 +99,34 @@ git commit -m "Set up"
 Both scripts must print `clean`. On macOS or Linux, also run
 `chmod +x system/hooks/pre-commit`.
 
-## 5. The first run
+## 5. A private backup on GitHub (optional)
+
+Ask whether they want one. Skip this step if not; everything works without it.
+
+1. They need a GitHub account and the GitHub CLI. Check with `gh --version`.
+   If it's missing, they install it: `winget install GitHub.cli` on Windows,
+   `brew install gh` on macOS, or see https://cli.github.com. A new terminal
+   may be needed before `gh` is found.
+2. Check `gh auth status`. If they aren't signed in, the sign-in is theirs:
+   ask them to run `gh auth login` in their own terminal and choose
+   GitHub.com, HTTPS, yes to authenticating git, and log in with a web
+   browser. It shows a one-time code to paste on the GitHub page. Never ask
+   for, or type, their password or a token.
+3. Run `git remote -v` again; it must still print nothing. Ask what to call
+   the repository (`assistant-notes` if they don't mind), then:
+
+   ```
+   gh repo create <name> --private --source . --remote origin --push
+   ```
+
+4. Confirm it with `gh repo view <name> --json visibility,url`. It must say
+   `PRIVATE`. If it says anything else, run
+   `gh repo edit <name> --visibility private --accept-visibility-change-consequences`
+   at once and tell them.
+5. Tell them the address, that only they can see it until they invite
+   someone, and that `/close` now pushes after every commit.
+
+## 6. The first run
 
 Run `/daily-checks`. The first mail sweep has no last run: ask how far back to
 look (a week is usual), and write the real timestamp into its *Last run* when
