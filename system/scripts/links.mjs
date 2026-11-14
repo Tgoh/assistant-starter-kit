@@ -10,10 +10,13 @@
 //
 // FROM and TO are entity paths under subjects/, e.g. people/<slug>. A row reads
 // "FROM RELATION TO": people/<a> "friend of" people/<b>; providers/<insurer>
-// "insures" properties/<home>. "household" is the household itself.
+// "insures" properties/<home>. ROOT_ENTITY (config.json "root", e.g. household,
+// business, team) is the whole thing the assistant looks after.
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { resolve, join, relative, dirname } from "node:path";
-import { P, ROOT, readJSON, writeJSON } from "./lib.mjs";
+import { P, ROOT, readJSON, writeJSON, config } from "./lib.mjs";
+
+const ROOT_ENTITY = config.root || "household";
 
 const MARK = "**Links (generated):**";
 const [, , cmd, ...rest] = process.argv;
@@ -27,14 +30,14 @@ const load = () => (existsSync(P.links) ? readJSON(P.links) : []);
 const key = (l) => `${l.from}|${l.relation}|${l.to}`;
 const sortRows = (rows) => rows.sort((a, b) => key(a).localeCompare(key(b)));
 
-// every entity folder: subjects/<category>/<slug>/README.md, plus subjects/household
+// every entity folder: subjects/<category>/<slug>/README.md, plus subjects/<root>
 export function entities() {
   const out = [];
   const subj = resolve(ROOT, "subjects");
-  if (existsSync(resolve(subj, "household", "README.md"))) out.push("household");
+  if (existsSync(resolve(subj, ROOT_ENTITY, "README.md"))) out.push(ROOT_ENTITY);
   for (const cat of readdirSync(subj)) {
     const d = join(subj, cat);
-    if (!statSync(d).isDirectory() || cat === "household") continue;
+    if (!statSync(d).isDirectory() || cat === ROOT_ENTITY) continue;
     for (const slug of readdirSync(d)) if (existsSync(join(d, slug, "README.md"))) out.push(`${cat}/${slug}`);
   }
   return out;
@@ -111,7 +114,7 @@ try {
       if (cur !== undefined && cur !== lineFor(e, rows)) errs.push(`${e}: generated links line is stale — run render`);
     }
     const linked = new Set(rows.flatMap((l) => [l.from, l.to]));
-    for (const e of entities()) if (!linked.has(e) && e !== "household") errs.push(`subjects/${e}: an entity nothing links to — connect it or ask why it exists`);
+    for (const e of entities()) if (!linked.has(e) && e !== ROOT_ENTITY) errs.push(`subjects/${e}: an entity nothing links to — connect it or ask why it exists`);
     if (errs.length) { console.error(errs.map((e) => "  - " + e).join("\n")); process.exit(1); }
     console.log(`links: ${rows.length} rows, clean`);
   } else console.log(readFileSync(new URL(import.meta.url), "utf8").split("\n").slice(1, 12).join("\n"));

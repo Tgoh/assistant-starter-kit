@@ -1,7 +1,8 @@
 # Assistant starter kit
 
-A personal assistant that keeps its memory in a git repository of plain files,
-run by Claude Code. There is no database and no server. Each session starts
+An assistant that keeps its memory in a git repository of plain files, run by
+Claude Code. Use it for personal life, a small business, a team, a research
+project, or anything else with people, deadlines and paperwork to keep track of. There is no database and no server. Each session starts
 with no memory, reads the files, does the work, and commits. The repository is
 the only state.
 
@@ -16,7 +17,7 @@ what Claude follows.
 |---|---|---|
 | Code | `system/` | The design (`README.md`), its reasons (`decisions.md`), Node scripts, the pre-commit hook. Names nobody, so it can be handed on |
 | Procedures | `.claude/skills/` | One folder per procedure: daily checks, mail sweep, close, journal, the review routines |
-| Data | everything else | What's true of your life: `subjects/` (one folder per person, provider, property…), `matters/` (pieces of work), `journal/`, and the tables |
+| Data | everything else | What's true of the world it looks after: `subjects/` (one folder per person, organisation, client, property…), `matters/` (pieces of work), `journal/`, and the tables |
 | Personality | `assistant/` | Your rules for how it talks and writes, and a persona it keeps for itself |
 
 **The obligations table is the core.** Every next step is one row in
@@ -54,6 +55,6 @@ mailboxes.
 
 ## Where it came from
 
-This kit was taken from a household system that has run daily since September
+This kit was taken from a working system that has run daily since September
 2026. The rules in `assistant/` and the lessons in `system/decisions.md` were
 earned there; expect yours to diverge, and write down why when they do.

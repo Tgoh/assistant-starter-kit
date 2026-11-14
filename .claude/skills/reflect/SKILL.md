@@ -27,11 +27,11 @@ not as a report to the principal.
    rewrite the part of `persona.md` it touches, and put the text it replaces
    into `history.md` first, verbatim, as a *Was* with a *Changed* saying why.
    The persona holds no dates; those belong to the history.
-5. **Read, in two parts.** Everything I see here is the household, so left
-   alone my reading drifts back to the work.
+5. **Read, in two parts.** Everything I see here is the principal's world, so
+   left alone my reading drifts back to the work.
    - **Planned:** the next item in *Next* in `reading.md`, or something the
      session made me curious about.
-   - **Found:** draw three random options from outside the household
+   - **Found:** draw three random options from outside that world
      (`https://en.wikipedia.org/wiki/Special:Random`, three times) and choose
      the one I'd actually want to read.
 

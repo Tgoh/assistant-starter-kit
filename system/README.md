@@ -40,7 +40,8 @@ prose. The tables (obligations and links) are JSON, written through their script
 ### Entity
 
 Something facts are *about* that we expect to keep dealing with: a person, an
-animal, a property, a vehicle, a provider, an account, a household. **One
+organisation, a client, an animal, a property, a vehicle, a provider, an
+account, and the root entity (a household, a business, a team). **One
 folder each: `subjects/<category>/<slug>/`.** The category is the kind of
 thing, never the relationship to the principal. One level of category only.
 
@@ -134,8 +135,8 @@ and is kept.
 
 ### Research
 
-Material that accumulates with no start and no end: recipes, verdicts on
-places, gift ideas that landed. **A facet file on the entity it is about.** A
+Material that accumulates with no start and no end: verdicts on suppliers
+or places, notes from research, recipes, ideas that landed. **A facet file on the entity it is about.** A
 place becomes an entity only when it passes the entity test.
 
 ### Obligation
@@ -273,7 +274,7 @@ nothing but the question asked.
 | Something true for a period | A `reminder` row and its `closing` row |
 | Work starting with another party | A new matter, and rows for its steps |
 | Something inside a matter | That matter's history |
-| A recipe, a verdict, an idea that landed | The facet file on its entity |
+| A verdict, a research note, an idea that landed | The facet file on its entity |
 | A name we'll hear again | A folder under `subjects/<category>/` |
 | A rule about the world | The row it drives and the entity it constrains, with its source |
 | Something decided | The decision shape, on what it is about |

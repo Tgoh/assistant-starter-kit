@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // Site notes for browser work: one file per site in .claude/skills/browser/sites/,
-// whose first line names the domains it covers ("domains: youtube.com, youtu.be").
+// whose first line names the domains it covers ("domains: example.com, example.net").
 //
 //   node system/scripts/sitenotes.mjs URL     (prints the matching note in full, or says there is none)
 //   node system/scripts/sitenotes.mjs list    (every note and its domains)
 //   node system/scripts/sitenotes.mjs check   (every note has a domains line; no domain claimed twice)
 //
 // A host matches a domain when it is that domain or a subdomain of it, so
-// m.youtube.com finds youtube.com. When several match, the longest wins, so a
+// app.example.com finds example.com. When several match, the longest wins, so a
 // note for mail.google.com beats one for google.com.
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { resolve, relative } from "node:path";

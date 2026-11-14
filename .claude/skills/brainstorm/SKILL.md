@@ -22,20 +22,27 @@ complete because it can't see what's missing.
 3. Push past the obvious. The first three answers are already recorded; the
    value is in the fourth and fifth.
 4. Useful prompts: what would go wrong if we were away for a month? What did we
-   pay for last year and have since forgotten? What does someone else in the
-   household handle that isn't written down? What still arrives by post?
+   pay for last year and have since forgotten? What does someone else handle
+   that isn't written down? What still arrives by post?
 5. New facts to the entity; new obligations as rows through
    `system/scripts/obligations.mjs add`.
 
 ## Rotation
 
-Setup writes this list for the principal. A household default:
+Setup keeps the one that fits the principal and deletes the rest.
+
+A household:
 
 utilities -> vehicles -> property -> money and super -> subscriptions and
 recurring charges -> health and appointments -> documents (wills, powers of
 attorney, passports, insurance beneficiaries) -> back to the top.
 
-For work notes instead: clients or stakeholders -> projects -> recurring
+A small business: clients -> suppliers and contracts -> invoicing and
+payments -> tax, compliance and registrations -> insurance and licences ->
+software, accounts and subscriptions -> premises and equipment -> back to the
+top.
+
+A team or a project: stakeholders -> projects and milestones -> recurring
 reports and deadlines -> accounts, licences and renewals -> people to follow
 up -> back to the top.
 

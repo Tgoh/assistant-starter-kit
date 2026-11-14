@@ -1,6 +1,6 @@
 ---
 name: mail-sweep
-description: Search every mailbox the household uses. Use in the daily checks for what has arrived, whenever a document is believed to exist, and before asking the principal.
+description: Search every mailbox the assistant covers. Use in the daily checks for what has arrived, whenever a document is believed to exist, and before asking the principal.
 ---
 
 # Mail sweep
@@ -20,8 +20,8 @@ arrivals get seen before they're asked what happened. **It is called from
 
 Each entry in `config.json` says how it is reached: through a mail connector
 (the Gmail tool), or only through a browser profile (`/browser` says which).
-**One mailbox coming back empty proves nothing.** Household mail lands with
-whoever signed up for the thing, and reaches the others as a forward, if at all.
+**One mailbox coming back empty proves nothing.** Mail lands with whoever
+signed up for the thing, and reaches the others as a forward, if at all.
 
 ## Steps
 
@@ -35,7 +35,7 @@ whoever signed up for the thing, and reaches the others as a forward, if at all.
    to midnight. Per mailbox:
    - **`in:anywhere after:<epoch>` with no category filter.** Skim the
      marketing; don't filter it out, because real mail lands in Promotions.
-   - **`in:sent after:<epoch>`**: what the household sent, which decides who
+   - **`in:sent after:<epoch>`**: what was sent, which decides who
      moves next.
    - **Spam, in the browser.** The Gmail API does not see Spam; `in:spam`
      comes back empty while the folder is full.

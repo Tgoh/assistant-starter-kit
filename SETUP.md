@@ -29,9 +29,11 @@ Ask, and wait for each answer:
 
 1. Their name as they use it, and their city.
 2. Their time zone (an IANA name, such as `Australia/Brisbane`).
-3. **What this is for.** A household, work notes, or both. This decides the
+3. **What this is for.** Personal life and a household, a small business, a
+   team, a research project, or a mix. This decides the root entity, the
    brainstorm rotation and which categories to start in `subjects/`.
-4. Who else is in the picture: a partner, family, colleagues. Each becomes an
+4. Who else is in the picture: a partner, family, colleagues, clients,
+   suppliers. Each becomes an
    entity. Ask whether anything here is ever shared with them; the default is
    no.
 5. Anything they never want recorded, raised or searched for. Each goes in
@@ -49,11 +51,13 @@ Ask, and wait for each answer:
    saying who they are, then what they told you, with `?` for what's unknown.
    The slug is short and never carries a fact that can change.
 4. One entity per other person named in step 1.4.
-5. `subjects/household/README.md`, first line saying whose household it is.
+5. **The root entity**, the whole thing the assistant looks after: a short
+   slug for it (`household`, `business`, `team`, `lab`) in `config.json` as
+   `root`, and `subjects/<root>/README.md`, first line saying what it is.
    Then link every entity, through the script, never by hand:
-   `node system/scripts/links.mjs add people/<slug> "member of" household`,
+   `node system/scripts/links.mjs add people/<slug> "member of" <root>`,
    and the same for each person, with the relation that fits ("partner of",
-   "colleague of"). The checker refuses an entity nothing links to; it is the
+   "colleague of", "client of"). The checker refuses an entity nothing links to; it is the
    guard against names written down and never connected.
 6. If they use the browser extension: `subjects/people/<slug>/browsers.md`
    with a table of profile name, device ID and who it is signed in as, and
@@ -80,7 +84,7 @@ node system/scripts/obligations.mjs add --id workaround-review --kind routine --
 ```
 
 Then ask: **what's coming up that you'd hate to forget?** Renewals, bills,
-deadlines, things promised. Each becomes a `step` row with a due date and a
+invoices, deadlines, things promised. Each becomes a `step` row with a due date and a
 lead time, linked to its entity. Anything time-sensitive also gets a calendar
 event; the row stores its id with `edit ID --calendar EVENT_ID`, and the
 event's description ends with `Register: <id> <key>`.
