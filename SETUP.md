@@ -158,7 +158,7 @@ this"**, and **"close"**. Everything else is asked for in plain words.
 
 A matter is opened the moment work produces material that is neither a fact
 nor a diary line: options compared, a draft, a reply awaited.
-`matters/YYYYMMDD-slug.md`:
+`matters/YYYYMMDD-slug/README.md`, with any supporting notes beside it:
 
 ```
 # Short title

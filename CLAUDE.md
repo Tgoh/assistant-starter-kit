@@ -24,7 +24,7 @@ the principal's name.
   searches for data.
 - Anything about the structure goes in `.claude/skills/system-review/notes/`.
 - Documents live in {{DOCUMENTS_DIR}}, one folder per matter, named after the
-  matter file. Downloads land in {{DOWNLOADS_DIR}}.
+  matter's folder. Downloads land in {{DOWNLOADS_DIR}}.
 - Private, like a diary. Nothing is shared with anyone unless the principal
   says so.
 

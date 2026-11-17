@@ -9,7 +9,7 @@
 //   node system/scripts/obligations.mjs tick ID [--on YYYY-MM-DD]
 //   node system/scripts/obligations.mjs defer ID YYYY-MM-DD [--note "..."]
 //   node system/scripts/obligations.mjs asked ID   (an awaiting row put to him, unanswered: ask again after `every`, or a week)
-//   node system/scripts/obligations.mjs edit ID --what "..." | --lead "..." | --every "..." | --calendar EVENT_ID | --uncalendar EVENT_ID | --no-matter "why it stays a row"
+//   node system/scripts/obligations.mjs edit ID --what "..." | --lead "..." | --every "..." | --link matters/X (replaces the links; repeat for several) | --calendar EVENT_ID | --uncalendar EVENT_ID | --no-matter "why it stays a row"
 //   (an edit that leaves a step's text rewritten twice or more with no matter prints a note; /close's audit lists such rows)
 //   Any --FIELD can be given as --FIELD-file PATH (e.g. --what-file), read from a file written with the Write tool.
 //   node system/scripts/obligations.mjs calendar  (every row with a calendar event: id, key, event ids)
@@ -20,6 +20,7 @@
 // name and can come back. A calendar event carries "<calendar_tag>: <id> <key>" as the
 // last line of its description, and the row carries the event's id in `calendar`.
 //   node system/scripts/obligations.mjs remove ID [--note "..."]
+//   (tick and remove say when the row was a matter's last, so the principal is asked whether to close it)
 //   node system/scripts/obligations.mjs sort
 //   node system/scripts/obligations.mjs check
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -129,6 +130,11 @@ const whatText = (r) => {
 };
 // a row with calendar events: say what the change means for them
 const calendarNote = (r, what) => { if (r.calendar?.length) console.log(`calendar: ${what} event${r.calendar.length > 1 ? "s" : ""} ${r.calendar.join(", ")} ("${TAG}: ${r.id} ${r.key}")`); };
+const lastRowNote = (r, rows) => {
+  const ms = new Set((JSON.stringify(r).match(/matters\/\d{8}-[a-z0-9-]+/g) ?? []).filter((m) => !m.startsWith("matters/closed")));
+  for (const m of ms) if (!rows.some((x) => JSON.stringify(x).includes(m)) && existsSync(resolve(ROOT, m, "README.md")))
+    console.log(`${m} has no rows left. Ask whether to close it (matters.mjs close ${m.slice(8)}), or add its next step, or give it a **Trigger:** line.`);
+};
 // ---------- commands ----------
 try {
   if (cmd === "list") {
@@ -163,10 +169,10 @@ try {
       if (rem) { rows.splice(rows.indexOf(rem), 1); logEvent("remove", rem.id, rem, null, `closed by ${r.id}`); }
       rows.splice(rows.indexOf(r), 1); logEvent("tick", r.id, before, null, `closing row; reminder ${r.pairs} removed`);
       console.log(`closed ${r.id} and its reminder ${r.pairs}. Now move the fact from the entity's README into its history.`);
-      calendarNote(r, "delete"); if (rem) calendarNote(rem, "delete");
+      calendarNote(r, "delete"); if (rem) calendarNote(rem, "delete"); lastRowNote(r, rows); if (rem) lastRowNote(rem, rows);
     } else if (!r.every) {
       rows.splice(rows.indexOf(r), 1); logEvent("tick", r.id, before, null);
-      console.log(`done: ${r.id} removed. Record how it ended in its matter or the journal.`); calendarNote(r, "delete");
+      console.log(`done: ${r.id} removed. Record how it ended in its matter or the journal.`); calendarNote(r, "delete"); lastRowNote(r, rows);
     } else if (r.anchor.type === "due") {
       r.anchor.date = addInterval(r.anchor.date, r.every, 1);
       logEvent("tick", r.id, before, r); console.log(`advanced ${r.id}: due ${human(r.anchor.date)}, wakes ${human(wake(r))}`); calendarNote(r, "check the next occurrence of");
@@ -204,7 +210,7 @@ try {
     if (n) console.log(`note: ${r.id}'s text has been rewritten ${n} times and it has no matter. If it has history, options or a reply awaited, open one and point the row at it; if not, say why in extra["no-matter"].`);
   } else if (cmd === "remove") {
     const rows = load(); const r = find(rows, args._[0]);
-    rows.splice(rows.indexOf(r), 1); save(rows); logEvent("remove", r.id, r, null, args.note); console.log(`removed ${r.id}`); calendarNote(r, "delete");
+    rows.splice(rows.indexOf(r), 1); save(rows); logEvent("remove", r.id, r, null, args.note); console.log(`removed ${r.id}`); calendarNote(r, "delete"); lastRowNote(r, rows);
   } else if (cmd === "calendar" && args.gone) {
     // events whose row ended, or which a row dropped, since the last commit: each should be deleted
     const since = execFileSync("git", ["log", "-1", "--format=%cI"], { cwd: ROOT, encoding: "utf8" }).trim();

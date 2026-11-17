@@ -110,8 +110,14 @@ A row whose text has been rewritten twice has had more than one exchange:
 actively keeping in mind, where no date can be honestly set (the wardrobe, until
 they next go shopping). A row can't hold it, because a row needs a wake date.
 
-**One file each: `matters/YYYYMMDD-slug.md`**, dated when it opened. What it is
-with and about are links. In order:
+**One folder each: `matters/YYYYMMDD-slug/`**, dated when it opened, with the
+matter itself in `README.md`, as an entity has. What it is with and about are
+links, and `matters/YYYYMMDD-slug` is how rows and links point at it.
+**Supporting notes go beside the README**: text the matter keeps working from,
+such as a tracker table, a shortlist or the approved text of a letter, each its
+own `.md` file in the folder. **Binary documents stay outside the repo**, in the
+documents folder named after the matter: PDFs, scans and photos. The README
+reads, in order:
 
 1. **Header**: the generated links line, the documents folder, one line on
    where things stand *now*, and, while it has no rows, its trigger. When that line changes, the old one goes into the
@@ -128,9 +134,10 @@ trigger**: a `**Trigger:**` line in its header naming the situation that brings
 it back. `scripts/matters.mjs triggers` prints them at the start of a session;
 when the situation comes up, raise the matter. **A matter closes only on
 the principal's word**: at a logical stopping point (its last row done, an
-answer that settles it), ask whether to close it out. **Closing one promotes
+answer that settles it), ask whether to close it out. `tick` and `remove` say
+when a row was a matter's last; `scripts/matters.mjs close` does the closing. **Closing one promotes
 what it taught**: facts to its entities,
-preferences to their research files. Then the file moves to `matters/closed/`
+preferences to their research files. Then the folder moves to `matters/closed/`
 and is kept.
 
 ### Research
@@ -316,6 +323,6 @@ journal/               the diary, one file per month
 system/                this folder, decisions.md, scripts/, hooks/
 .claude/skills/        one folder per skill
 assistant/             the persona and memory (self/), and the principal's rules
-matters/               one file per matter, date-first; closed/ beneath
+matters/               one folder per matter, date-first: README.md and supporting notes; closed/ beneath
 subjects/              one folder per entity, under its category
 ```

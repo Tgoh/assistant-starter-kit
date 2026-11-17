@@ -42,12 +42,13 @@ export function entities() {
   }
   return out;
 }
-// matters are endpoints too: "matters/<name>" (open) — a matter is with and about entities
+// matters are endpoints too: "matters/<name>" (open) — a matter is with and about entities.
+// Each is a folder, matters/<name>/README.md, like an entity; closed/ is not one.
 export function matters() {
   const d = resolve(ROOT, "matters"); if (!existsSync(d)) return [];
-  return readdirSync(d).filter((f) => f.endsWith(".md")).map((f) => `matters/${f.slice(0, -3)}`);
+  return readdirSync(d).filter((f) => f !== "closed" && existsSync(join(d, f, "README.md"))).map((f) => `matters/${f}`);
 }
-const pathFor = (e) => e.startsWith("matters/") ? resolve(ROOT, e + ".md") : resolve(ROOT, "subjects", e, "README.md");
+const pathFor = (e) => e.startsWith("matters/") ? resolve(ROOT, e, "README.md") : resolve(ROOT, "subjects", e, "README.md");
 
 export function validate(rows) {
   const errs = []; const seen = new Set(); const ents = new Set([...entities(), ...matters()]);

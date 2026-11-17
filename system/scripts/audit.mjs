@@ -50,11 +50,10 @@ for (const s of readdirSync(skills)) {
 const rows = readJSON(P.json);
 const pointedAt = JSON.stringify(rows);
 const mdir = resolve(ROOT, "matters");
-for (const f of readdirSync(mdir)) {
-  if (!f.endsWith(".md")) continue;
-  const slug = f.replace(/\.md$/, "");
+for (const slug of readdirSync(mdir)) {
+  if (slug === "closed" || !existsSync(join(mdir, slug, "README.md"))) continue;
   if (pointedAt.includes(`matters/${slug}`)) continue;
-  if (!/^\*\*Trigger:\*\*\s*\S/m.test(readFileSync(join(mdir, f), "utf8"))) findings.push(`matters/${f}: no rows and no "**Trigger:**" line — name the situation that brings it back, give it its next step, or ask the principal whether to close it out`);
+  if (!/^\*\*Trigger:\*\*\s*\S/m.test(readFileSync(join(mdir, slug, "README.md"), "utf8"))) findings.push(`matters/${slug}: no rows and no "**Trigger:**" line — name the situation that brings it back, give it its next step, or ask the principal whether to close it out`);
 }
 
 // 4. a row rewritten twice or more without a matter has outgrown itself
